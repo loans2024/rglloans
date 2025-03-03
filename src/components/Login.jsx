@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,8 +11,8 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  // Password visible by default
   const [showPassword, setShowPassword] = useState(true);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,6 +27,10 @@ const Login = () => {
       const res = await axios.post("https://loansbackend.onrender.com/login", formData);
       setSuccess("Login successful!");
       console.log(res.data);
+      // Redirect to the Loan Purpose page after 1 second
+      setTimeout(() => {
+        navigate("/loan-purpose");
+      }, 1000);
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.error || "Network error, please try again.");
@@ -79,5 +84,6 @@ const Login = () => {
 };
 
 export default Login;
+
 
 
