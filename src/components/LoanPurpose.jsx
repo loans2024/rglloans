@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const LoanPurpose = () => {
+  const navigate = useNavigate();
   const [selected, setSelected] = useState("");
 
   const options = [
@@ -10,6 +12,12 @@ const LoanPurpose = () => {
     { value: "emergency", label: "Emergency" },
     { value: "others", label: "Others" },
   ];
+
+  const handleClick = (option) => {
+    setSelected(option.value);
+    // Redirect to the loan page and pass the selected purpose in state if needed
+    navigate("/loan-page", { state: { purpose: option.value } });
+  };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-900">
@@ -29,7 +37,7 @@ const LoanPurpose = () => {
           {options.map((option) => (
             <button
               key={option.value}
-              onClick={() => setSelected(option.value)}
+              onClick={() => handleClick(option)}
               className={`w-full py-2 rounded-lg border text-white transition 
                 ${
                   selected === option.value
@@ -41,12 +49,6 @@ const LoanPurpose = () => {
             </button>
           ))}
         </div>
-        {selected && (
-          <p className="text-green-400 text-center mt-6">
-            You selected:{" "}
-            {selected.charAt(0).toUpperCase() + selected.slice(1)}
-          </p>
-        )}
       </motion.div>
     </div>
   );
