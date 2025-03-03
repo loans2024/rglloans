@@ -1,26 +1,45 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoanProcessing = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileNumber, setMobileNumber] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const selectedAmount = location.state?.amount || { label: "N/A" };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Validate that mobile number is exactly 10 digits
     if (!mobileNumber.match(/^\d{10}$/)) {
       setError("Please enter a valid 10-digit mobile number.");
       return;
     }
-
+    
     setError("");
-    // Proceed to the next step (e.g., confirming loan request)
-    alert(`Loan request for ${selectedAmount.label} submitted with mobile number: ${mobileNumber}`);
-    navigate("/loan-confirmation");
+    setLoading(true);
+
+    try {
+      // Call your backend endpoint that initiates the M-Pesa STK push
+      // Update the URL below as needed for your environment
+      const response = await axios.post("http://localhost:3000/api/stkpush", {
+        phoneNumber: mobileNumber,           // Phone number in the format: 2547XXXXXXXX
+        accountReference: "ClientName"         // Replace with dynamic client name if available
+      });
+      
+      // On successful API call, notify the user and redirect to loan confirmation
+      alert("M-Pesa prompt initiated. Please check your phone to complete the payment of Ksh. 100.");
+      navigate("/loan-confirmation");
+    } catch (err) {
+      console.error(err);
+      setError("Failed to initiate M-Pesa payment. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -46,9 +65,10 @@ const LoanProcessing = () => {
           {error && <p className="text-red-400 text-center">{error}</p>}
           <button
             type="submit"
+            disabled={loading}
             className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-500 transition"
           >
-            Submit Loan Request
+            {loading ? "Processing..." : "Submit Loan Request"}
           </button>
         </form>
       </div>
