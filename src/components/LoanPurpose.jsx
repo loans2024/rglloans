@@ -27,7 +27,7 @@ const LoanPurpose = () => {
         transition={{ duration: 0.5 }}
         className="w-96 bg-gray-800 shadow-lg rounded-2xl p-6"
       >
-        <h2 className="text-2xl font-[poppins] text-white text-center mb-4">
+        <h2 className="text-2xl font-[poppins] text-yellow-400  text-center mb-4">
           Select Loan Purpose
         </h2>
         <p className="text-gray-300 text-center mb-6">
@@ -38,7 +38,7 @@ const LoanPurpose = () => {
             <button
               key={option.value}
               onClick={() => handleClick(option)}
-              className={`w-full py-2 rounded-lg border text-white transition 
+              className={`w-full py-2 rounded-lg border text-yellow-400 transition 
                 ${
                   selected === option.value
                     ? "bg-green-600 border-green-600 hover:bg-green-500"

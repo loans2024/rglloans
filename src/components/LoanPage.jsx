@@ -14,14 +14,12 @@ const LoanPage = () => {
     { value: 30000, label: "Ksh. 30,000" },
     { value: 50000, label: "Ksh. 50,000" },
     { value: 100000, label: "Ksh. 100,000" },
-    { value: 200000, label: "Ksh. 200,000"}
-
+    { value: 200000, label: "Ksh. 200,000" }
   ];
 
   const handleAmountClick = (amount) => {
     setSelectedAmount(amount);
-    // Navigate to the loan details page with the selected amount
-    navigate("/loan-details", { state: { amount } });
+    navigate("/loan-processing", { state: { amount } });
   };
 
   return (
@@ -65,4 +63,5 @@ const LoanPage = () => {
 };
 
 export default LoanPage;
+
 

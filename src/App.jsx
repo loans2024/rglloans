@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import LoanPurpose from "./components/LoanPurpose"; // Import the new component
 import LoanPage from "./components/LoanPage"; // Import the new component
+import LoanProcessing from "./components/LoanProcessing";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/loan-purpose" element={<LoanPurpose />} />
+        <Route path="/loan-processing" element={<LoanProcessing />} />
         <Route path="/loan-page" element={<LoanPage />} />
         {/* Default route */}
         <Route path="*" element={<Login />} />
