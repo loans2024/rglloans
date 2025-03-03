@@ -11,7 +11,7 @@ const Login = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="w-96 bg-gray-800 shadow-lg rounded-2xl p-6">
-          <h2 className="text-2xl font-[Poppins] text-white text-center mb-4">
+          <h2 className="text-2xl font-[poppins] text-white text-center mb-4">
             Login
           </h2>
           <div className="mb-4 relative">
@@ -46,4 +46,3 @@ const Login = () => {
 };
 
 export default Login;
-
