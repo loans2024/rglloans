@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 
 const Login = () => {
@@ -8,9 +8,10 @@ const Login = () => {
     username: "",
     password: "",
   });
-
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  // Password visible by default
+  const [showPassword, setShowPassword] = useState(true);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -41,13 +42,32 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <div className="mb-4 relative">
               <FaUser className="absolute left-3 top-3 text-gray-400" />
-              <input type="text" name="username" placeholder="Username" className="w-full pl-10 p-2 bg-gray-700 text-white border border-gray-600 rounded-md" onChange={handleChange} required />
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                className="w-full pl-10 p-2 bg-gray-700 text-white border border-gray-600 rounded-md"
+                onChange={handleChange}
+                required
+              />
             </div>
             <div className="mb-4 relative">
               <FaLock className="absolute left-3 top-3 text-gray-400" />
-              <input type="password" name="password" placeholder="Password" className="w-full pl-10 p-2 bg-gray-700 text-white border border-gray-600 rounded-md" onChange={handleChange} required />
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                className="w-full pl-10 pr-10 p-2 bg-gray-700 text-white border border-gray-600 rounded-md"
+                onChange={handleChange}
+                required
+              />
+              <div className="absolute right-3 top-3 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <FaEyeSlash className="text-gray-400" /> : <FaEye className="text-gray-400" />}
+              </div>
             </div>
-            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">Login</button>
+            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
+              Login
+            </button>
           </form>
           <p className="text-gray-400 text-center mt-4 text-sm">
             Don't have an account? <a href="/signup" className="text-blue-500">Sign up</a>
