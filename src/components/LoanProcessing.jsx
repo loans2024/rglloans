@@ -9,12 +9,13 @@ const LoanProcessing = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Assume selected loan amount comes via location.state (e.g., from LoanPage)
   const selectedAmount = location.state?.amount || { label: "N/A" };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validate that mobile number is exactly 10 digits
+    // Validate that the phone number is exactly 10 digits (local format)
     if (!mobileNumber.match(/^\d{10}$/)) {
       setError("Please enter a valid 10-digit mobile number.");
       return;
@@ -24,14 +25,13 @@ const LoanProcessing = () => {
     setLoading(true);
 
     try {
-      // Call your backend endpoint that initiates the M-Pesa STK push
-      // Update the URL below as needed for your environment
+      // Call the backend endpoint to initiate the STK push
       const response = await axios.post("http://localhost:3000/api/stkpush", {
-        phoneNumber: mobileNumber,           // Phone number in the format: 2547XXXXXXXX
-        accountReference: "ClientName"         // Replace with dynamic client name if available
+        phoneNumber: mobileNumber,           // e.g., "0712832145"
+        accountReference: "ClientName"         // You can pass a dynamic client name if available
       });
       
-      // On successful API call, notify the user and redirect to loan confirmation
+      // Notify the user and redirect to a confirmation page
       alert("M-Pesa prompt initiated. Please check your phone to complete the payment of Ksh. 100.");
       navigate("/loan-confirmation");
     } catch (err) {
